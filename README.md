@@ -6,3 +6,9 @@ This project is coming soon!!
 - Setting up Server
 - Setting up admin dashboard
 - Implementing Auth-Flow
+- Trpc Setup
+- Finishing our auth flow
+- sending a sign-up verification email
+- proper error handling & finishing auth
+- making our navbar trully dynamic - 
+- How to architect data models
