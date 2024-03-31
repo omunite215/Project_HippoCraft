@@ -105,7 +105,7 @@ const Page = () => {
 										</p>
 									)}
 								</div>
-								<Button variant="gooeyLeft">Sign up</Button>
+								<Button variant="gooeyLeft" type="submit">Sign up</Button>
 							</div>
 						</form>
 					</div>

@@ -6,6 +6,7 @@ import NavItems from "./NavItems";
 import { buttonVariants } from "./ui/button";
 import { getServerSideUser } from "@/lib/payload-utils";
 import { cookies } from "next/headers";
+import UserAccountNav from "./UserAccountNav";
 
 const Navbar = async () => {
 	const nextCookies = cookies();
@@ -39,7 +40,7 @@ const Navbar = async () => {
 										<span className="h-6 w-px bg-gray-200" aria-hidden="true" />
 									)}
 									{user ? (
-										<p>&nbsp;</p>
+										<UserAccountNav user={user}/>
 									) : (
 										<Link
 											href="/sign-up"

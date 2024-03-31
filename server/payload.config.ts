@@ -1,24 +1,25 @@
-import { Users } from "../collections/Users";
+// biome-ignore lint/style/useNodejsImportProtocol: <explanation>
+import path from "path";
+import { Products } from "../collections/Products/Products";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
-// biome-ignore lint/style/useNodejsImportProtocol: <explanation>
-import path from "path";
-import { buildConfig } from "payload/config";
 import dotenv from "dotenv";
+import { buildConfig } from "payload/config";
+import { Users } from "../collections/Users";
 
 dotenv.config({
-  path: path.resolve(__dirname, '../.env')
-})
+  path: path.resolve(__dirname, "../.env"),
+});
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || "",
-  collections: [Users],
+  collections: [Users, Products],
   routes: {
     admin: "/sell",
   },
   admin: {
-    user: 'users',
+    user: "users",
     bundler: webpackBundler(),
     meta: {
       titleSuffix: "- HippoCraft",
