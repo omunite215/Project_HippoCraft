@@ -8,7 +8,8 @@ This project is coming soon!!
 - Implementing Auth-Flow
 - Trpc Setup
 - Finishing our auth flow
-- sending a sign-up verification email
-- proper error handling & finishing auth
-- making our navbar trully dynamic - 
+- Sending a sign-up verification email
+- Proper error handling & finishing auth
+- Making our navbar trully dynamic - 
 - How to architect data models
+- Modelling our data and enabling uploads
