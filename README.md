@@ -13,3 +13,4 @@ This project is coming soon!!
 - Making our navbar trully dynamic - 
 - How to architect data models
 - Modelling our data and enabling uploads
+- Showing Products in our Store.
