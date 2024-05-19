@@ -14,3 +14,4 @@ This project is coming soon!!
 - How to architect data models
 - Modelling our data and enabling uploads
 - Showing Products in our Store.
+- AirBnb style Image Slider.
