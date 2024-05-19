@@ -15,3 +15,4 @@ This project is coming soon!!
 - Modelling our data and enabling uploads
 - Showing Products in our Store.
 - AirBnb style Image Slider.
+- Creating our product detail page.
