@@ -1,17 +1,28 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import { useCart } from "@/hooks/use-cart";
+import type { Product } from "@/server/payload-types";
 
-const AddToCartButton = () => {
+const AddToCartButton = ({ product }: { product: Product }) => {
+	const { addItem } = useCart();
 	const [isSuccess, setIsSuccess] = useState<boolean>(false);
-    
-    	useEffect(() => {
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
 		const timeout = setTimeout(() => setIsSuccess(false), 2000);
 		return () => clearTimeout(timeout);
 	}, [isSuccess]);
 
 	return (
-		<Button onClick={() => setIsSuccess(true)} size="lg" className=" w-full">
+		<Button
+			onClick={() => {
+				addItem(product);
+				setIsSuccess(true);
+			}}
+			size="lg"
+			className=" w-full"
+		>
 			{isSuccess ? "Added to Cart!!" : "Add to Cart"}
 		</Button>
 	);
