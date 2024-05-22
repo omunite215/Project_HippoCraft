@@ -16,3 +16,4 @@ This project is coming soon!!
 - Showing Products in our Store.
 - AirBnb style Image Slider.
 - Creating our product detail page.
+- Persistent Shopping Cart Logic.
