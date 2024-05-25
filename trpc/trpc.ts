@@ -1,5 +1,5 @@
-import type { User } from "@/server/payload-types";
-import type { ExpressContext } from "@/server/server";
+import type { User } from "../server/payload-types";
+import type { ExpressContext } from "../server/server";
 import { TRPCError, initTRPC } from "@trpc/server";
 import type { PayloadRequest } from "payload/types";
 

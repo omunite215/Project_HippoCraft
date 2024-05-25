@@ -3,7 +3,7 @@ import { privateProdcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { getPayloadClient } from "@/server/get-payload";
 import { stripe } from "../lib/stripe";
-import Stripe from "stripe";
+import type Stripe from "stripe";
 
 export const paymentRouter = router({
 	createSession: privateProdcedure
@@ -41,10 +41,15 @@ export const paymentRouter = router({
 					user: user.id,
 				},
 			});
-            const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = []
-            line_items.push({
-                
-            })
+			const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+
+			for (const product of filteredProducts) {
+				line_items.push({
+					// biome-ignore lint/style/noNonNullAssertion: <explanation>
+					price: product.priceId!,
+					quantity: 1,
+				});
+			}
 			try {
 				const stripeSession = await stripe.checkout.sessions.create({
 					success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/thank-you?orderId`,
@@ -55,7 +60,13 @@ export const paymentRouter = router({
 						userId: user.id,
 						orderID: order.id,
 					},
+					line_items,
 				});
-			} catch (err) {}
+
+				return { url: stripeSession.url };
+			} catch (err) {
+				console.log(err);
+				return { url: null };
+			}
 		}),
 });

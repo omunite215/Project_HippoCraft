@@ -1,5 +1,16 @@
+import {
+	AfterChangeHook,
+	type BeforeChangeHook,
+} from "payload/dist/collections/config/types";
 import { PRODUCT_CATEGORIES } from "../../config";
 import type { CollectionConfig } from "payload/types";
+import type { Product } from "../../server/payload-types";
+import { stripe } from "@/lib/stripe";
+
+const addUser: BeforeChangeHook<Product> = async ({ req, data }) => {
+	const user = req.user;
+	return { ...data, user: user.id };
+};
 
 export const Products: CollectionConfig = {
 	slug: "products",
@@ -7,6 +18,43 @@ export const Products: CollectionConfig = {
 		useAsTitle: "name",
 	},
 	access: {},
+	hooks: {
+		beforeChange: [
+			addUser,
+			async (args) => {
+				if (args.operation === "create") {
+					const data = args.data as Product;
+					const createdProduct = await stripe.products.create({
+						name: data.name,
+						default_price_data: {
+							currency: "USD",
+							unit_amount: Math.round(data.price * 100),
+						},
+					});
+					const updated: Product = {
+						...data,
+						stripeId: createdProduct.id,
+						priceId: createdProduct.default_price as string,
+					};
+					return updated;
+				} if (args.operation === "update") {
+					const data = args.data as Product;
+					// biome-ignore lint/style/noNonNullAssertion: <explanation>
+					const updatedProduct = await stripe.products.update(data.stripeId!, {
+						name: data.name,
+						// biome-ignore lint/style/noNonNullAssertion: <explanation>
+						default_price: data.priceId!
+					});
+					const updated: Product = {
+						...data,
+						stripeId: updatedProduct.id,
+						priceId: updatedProduct.default_price as string,
+					};
+					return updated;
+				}
+			},
+		],
+	},
 	fields: [
 		{
 			name: "users",
@@ -49,7 +97,7 @@ export const Products: CollectionConfig = {
 			label: "Product file(s)",
 			type: "relationship",
 			required: true,
-			relationTo: 'product_files',
+			relationTo: "product_files",
 			hasMany: false,
 		},
 		{
@@ -106,7 +154,7 @@ export const Products: CollectionConfig = {
 			type: "array",
 			label: "Product Images",
 			minRows: 1,
-      maxRows: 4,
+			maxRows: 4,
 			required: true,
 			labels: {
 				singular: "Image",

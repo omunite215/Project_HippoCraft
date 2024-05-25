@@ -17,4 +17,5 @@ This project is coming soon!!
 - AirBnb style Image Slider.
 - Creating our product detail page.
 - Persistent Shopping Cart Logic.
-- Creating our checkout page
+- Creating our checkout page.
+- Protecting our API with secured Routes.
