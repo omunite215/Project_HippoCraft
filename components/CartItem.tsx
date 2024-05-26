@@ -1,12 +1,12 @@
 "use client";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { useCart } from "@/hooks/use-cart";
+import { formatPrice } from "@/lib/utils";
 import type { Product } from "@/server/payload-types";
 import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { Button } from "./ui/button";
-import { formatPrice } from "@/lib/utils";
 
 const CartItem = ({ product }: { product: Product }) => {
 	const { image } = product.images[0];

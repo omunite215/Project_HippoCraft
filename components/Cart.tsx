@@ -1,9 +1,13 @@
 "use client";
+import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/utils";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import CartItem from "./CartItem";
 import { buttonVariants } from "./ui/button";
+import { ScrollArea } from "./ui/scroll-area";
 import { Separator } from "./ui/separator";
 import {
 	Sheet,
@@ -13,10 +17,6 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "./ui/sheet";
-import { useCart } from "@/hooks/use-cart";
-import { ScrollArea } from "./ui/scroll-area";
-import CartItem from "./CartItem";
-import { useEffect, useState } from "react";
 
 const Cart = () => {
 	const { items } = useCart();

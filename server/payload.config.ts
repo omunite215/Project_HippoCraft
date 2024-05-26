@@ -1,15 +1,15 @@
 // biome-ignore lint/style/useNodejsImportProtocol: <explanation>
 import path from "path";
-import { Products } from "../collections/Products/Products";
 import { webpackBundler } from "@payloadcms/bundler-webpack";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { slateEditor } from "@payloadcms/richtext-slate";
 import dotenv from "dotenv";
 import { buildConfig } from "payload/config";
-import { Users } from "../collections/Users";
 import { Media } from "../collections/Media";
-import { ProductFiles } from "../collections/ProductFile";
 import { Orders } from "../collections/Orders";
+import { ProductFiles } from "../collections/ProductFile";
+import { Products } from "../collections/Products/Products";
+import { Users } from "../collections/Users";
 
 dotenv.config({
 	path: path.resolve(__dirname, "../.env"),

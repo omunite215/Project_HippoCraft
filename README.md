@@ -1,6 +1,6 @@
 # Project_HippoCraft
 A Web App marketplace for UI Kits, icons and so on.
-This project is coming soon!!
+To be Live Soon!!
 - Building Navbar
 - Building Cart
 - Setting up Server
@@ -19,3 +19,11 @@ This project is coming soon!!
 - Persistent Shopping Cart Logic.
 - Creating our checkout page.
 - Protecting our API with secured Routes.
+- Creating User Checkout Sessions.
+- Creating Thank You Page.
+- Listening for Stripe Webhook Locally.
+- Creating Receipt Email.
+- Final Security Tweeks.
+- Final styling Tweeks.
+
+Project is Completed!! Only Deployment is Left...

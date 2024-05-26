@@ -8,8 +8,8 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/use-auth";
-import Link from "next/link";
 import type { User } from "@/server/payload-types";
+import Link from "next/link";
 import { Button } from "./ui/button";
 
 const UserAccountNav = ({ user }: { user: User }) => {

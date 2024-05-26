@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
-import { Button } from "./ui/button";
 import { useCart } from "@/hooks/use-cart";
 import type { Product } from "@/server/payload-types";
+import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
 const AddToCartButton = ({ product }: { product: Product }) => {
 	const { addItem } = useCart();

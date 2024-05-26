@@ -1,11 +1,11 @@
 "use client";
-import type { Product } from "@/server/payload-types";
-import React, { useEffect, useState } from "react";
-import { Skeleton } from "./ui/skeleton";
-import Link from "next/link";
-import { cn, formatPrice } from "@/lib/utils";
 import { PRODUCT_CATEGORIES } from "@/config";
+import { cn, formatPrice } from "@/lib/utils";
+import type { Product } from "@/server/payload-types";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import ImageSlider from "./ImageSlider";
+import { Skeleton } from "./ui/skeleton";
 
 type ProductListingProps = {
 	product: Product | null;

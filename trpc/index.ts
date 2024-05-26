@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { authRouter } from "./auth-router";
-import { publicProcedure, router } from "./trpc";
 import { QueryValidator } from "../lib/validators/query-validator";
 import { getPayloadClient } from "../server/get-payload";
+import { authRouter } from "./auth-router";
+import { publicProcedure, router } from "./trpc";
 
 export const appRouter = router({
 	auth: authRouter,
@@ -22,11 +22,11 @@ export const appRouter = router({
 
 			const parsedQueryOpts: Record<string, { equals: string }> = {};
 
-			Object.entries(queryOpts).forEach(([key, value]) => {
+			for (const [key, value] of Object.entries(queryOpts)) {
 				parsedQueryOpts[key] = {
 					equals: value,
 				};
-			});
+			}
 
 			const page = cursor || 1;
 

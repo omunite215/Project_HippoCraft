@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { useCart } from "@/hooks/use-cart";
 import { cn, formatPrice } from "@/lib/utils";
-import { trpc } from "@/trpc/client";
+import { trpc } from "../../trpc/client";
 import { Check, Loader2, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,11 +15,12 @@ const Page = () => {
 	const router = useRouter();
 	const { mutate: createCheckoutSession, isLoading } =
 		trpc.payment.createSession.useMutation({
-			onSuccess: ({url}) => {
+			onSuccess: ({ url }) => {
 				if (url) router.push(url);
 			},
 		});
-	const productIds = items.map(({ product }) => product.id)
+
+	const productIds = items.map(({ product }) => product.id);
 	const [isMounted, setIsMounted] = useState<boolean>(false);
 	useEffect(() => {
 		setIsMounted(true);
@@ -174,11 +175,15 @@ const Page = () => {
 						</div>
 						<div className="mt-6">
 							<Button
+								disabled={items.length === 0 || isLoading}
 								onClick={() => createCheckoutSession(productIds)}
 								className="w-full"
 								size="lg"
 								variant="gooeyRight"
 							>
+								{isLoading && (
+									<Loader2 className="size-4 animate-spin mr-1.5" />
+								)}
 								Checkout
 							</Button>
 						</div>

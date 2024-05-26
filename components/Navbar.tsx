@@ -1,12 +1,13 @@
+import { getServerSideUser } from "@/lib/payload-utils";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import Cart from "./Cart";
 import { Icons } from "./Icons";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import NavItems from "./NavItems";
-import { buttonVariants } from "./ui/button";
-import { getServerSideUser } from "@/lib/payload-utils";
-import { cookies } from "next/headers";
 import UserAccountNav from "./UserAccountNav";
+import { buttonVariants } from "./ui/button";
+import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
 	const nextCookies = cookies();
@@ -17,7 +18,7 @@ const Navbar = async () => {
 				<MaxWidthWrapper>
 					<div className="border-b border-gray-200">
 						<div className="flex h-16 items-center">
-							{/* TODO: Mobile Nav */}
+							<MobileNav/>
 							<div className="ml-4 flex lg:ml-0">
 								<Link href="/">
 									<Icons.logo className="h-10 w-10" />
@@ -40,7 +41,7 @@ const Navbar = async () => {
 										<span className="h-6 w-px bg-gray-200" aria-hidden="true" />
 									)}
 									{user ? (
-										<UserAccountNav user={user}/>
+										<UserAccountNav user={user} />
 									) : (
 										<Link
 											href="/sign-up"
