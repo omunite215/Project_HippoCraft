@@ -107,7 +107,7 @@ var start = function () { return __awaiter(void 0, void 0, void 0, function () {
                                 case 0:
                                     payload.logger.info("Next.js is building for production");
                                     // @ts-expect-error
-                                    return [4 /*yield*/, nextBuild(path.join(__dirname, "../"))];
+                                    return [4 /*yield*/, nextBuild(path.join(__dirname, "../../"))];
                                 case 1:
                                     // @ts-expect-error
                                     _a.sent();
