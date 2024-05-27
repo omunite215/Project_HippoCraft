@@ -44,7 +44,7 @@ var ReceiptEmail = function (_a) {
     var total = products.reduce(function (acc, curr) { return acc + curr.price; }, 0) + 1;
     return (React.createElement(components_1.Html, null,
         React.createElement(components_1.Head, null),
-        React.createElement(components_1.Preview, null, "Your DigitalHippo Receipt"),
+        React.createElement(components_1.Preview, null, "Your Hippocraft Receipt"),
         React.createElement(components_1.Body, { style: main },
             React.createElement(components_1.Container, { style: container },
                 React.createElement(components_1.Section, null,
@@ -106,7 +106,7 @@ var ReceiptEmail = function (_a) {
                     ' ',
                     React.createElement(components_1.Link, { href: '#' }, "Privacy Policy ")),
                 React.createElement(components_1.Text, { style: footerCopyright },
-                    "Copyright \u00A9 2023 DigitalHippo Inc. ",
+                    "Copyright \u00A9 2024 Hippocraft Inc. ",
                     React.createElement("br", null),
                     ' ',
                     React.createElement(components_1.Link, { href: '#' }, "All rights reserved"))))));
