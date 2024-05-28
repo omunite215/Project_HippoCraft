@@ -48,23 +48,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Media = void 0;
-var isAdminorHasAccessToImages = function () {
-    return function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-        var user;
-        var req = _b.req;
-        return __generator(this, function (_c) {
-            user = req.user;
-            if (!user)
-                return [2 /*return*/, false];
-            if (user.role === "admin")
-                return [2 /*return*/, true];
-            return [2 /*return*/, {
-                    user: {
-                        equals: req.user.id,
-                    },
-                }];
+var isAdminOrHasAccessToImages = function () {
+    return function (_a) {
+        var req = _a.req;
+        return __awaiter(void 0, void 0, void 0, function () {
+            var user;
+            return __generator(this, function (_b) {
+                user = req.user;
+                if (!user)
+                    return [2 /*return*/, false];
+                if (user.role === "admin")
+                    return [2 /*return*/, true];
+                return [2 /*return*/, {
+                        user: {
+                            equals: req.user.id,
+                        },
+                    }];
+            });
         });
-    }); };
+    };
 };
 exports.Media = {
     slug: "media",
@@ -77,23 +79,25 @@ exports.Media = {
         ],
     },
     access: {
-        read: function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-            var referer;
-            var req = _b.req;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        referer = req.headers.referer;
-                        if (!req.user || !(referer === null || referer === void 0 ? void 0 : referer.includes("sell"))) {
-                            return [2 /*return*/, true];
-                        }
-                        return [4 /*yield*/, isAdminorHasAccessToImages()({ req: req })];
-                    case 1: return [2 /*return*/, _c.sent()];
-                }
+        read: function (_a) {
+            var req = _a.req;
+            return __awaiter(void 0, void 0, void 0, function () {
+                var referer;
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            referer = req.headers.referer;
+                            if (!req.user || !(referer === null || referer === void 0 ? void 0 : referer.includes("sell"))) {
+                                return [2 /*return*/, true];
+                            }
+                            return [4 /*yield*/, isAdminOrHasAccessToImages()({ req: req })];
+                        case 1: return [2 /*return*/, _b.sent()];
+                    }
+                });
             });
-        }); },
-        delete: isAdminorHasAccessToImages(),
-        update: isAdminorHasAccessToImages(),
+        },
+        delete: isAdminOrHasAccessToImages(),
+        update: isAdminOrHasAccessToImages(),
     },
     admin: {
         hidden: function (_a) {

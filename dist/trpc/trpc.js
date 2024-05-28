@@ -36,24 +36,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.privateProdcedure = exports.publicProcedure = exports.router = void 0;
+exports.privateProcedure = exports.publicProcedure = exports.router = void 0;
 var server_1 = require("@trpc/server");
 var t = server_1.initTRPC.context().create();
 var middleware = t.middleware;
-var isAuth = middleware(function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-    var req, user;
-    var ctx = _b.ctx, next = _b.next;
-    return __generator(this, function (_c) {
-        req = ctx.req;
-        user = req.user;
-        if (!user || !user.id) {
-            throw new server_1.TRPCError({ code: "UNAUTHORIZED" });
-        }
-        return [2 /*return*/, next({
-                ctx: { user: user },
-            })];
+var isAuth = middleware(function (_a) {
+    var ctx = _a.ctx, next = _a.next;
+    return __awaiter(void 0, void 0, void 0, function () {
+        var req, user;
+        return __generator(this, function (_b) {
+            req = ctx.req;
+            user = req.user;
+            if (!user || !user.id) {
+                throw new server_1.TRPCError({ code: 'UNAUTHORIZED' });
+            }
+            return [2 /*return*/, next({
+                    ctx: {
+                        user: user,
+                    },
+                })];
+        });
     });
-}); });
+});
 exports.router = t.router;
 exports.publicProcedure = t.procedure;
-exports.privateProdcedure = t.procedure.use(isAuth);
+exports.privateProcedure = t.procedure.use(isAuth);

@@ -62,60 +62,62 @@ var addUser = function (_a) {
     var user = req.user;
     return __assign(__assign({}, data), { user: user === null || user === void 0 ? void 0 : user.id });
 };
-var yourOwnAndPurchased = function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-    var user, products, ownProductFileIds, orders, purchasedProductFileIds;
-    var req = _b.req;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
-            case 0:
-                user = req.user;
-                if (user.role === "admin")
-                    return [2 /*return*/, true];
-                if (!user)
-                    return [2 /*return*/, false];
-                return [4 /*yield*/, req.payload.find({
-                        collection: "products",
-                        depth: 0,
-                        where: {
-                            user: {
-                                equals: user.id,
+var yourOwnAndPurchased = function (_a) {
+    var req = _a.req;
+    return __awaiter(void 0, void 0, void 0, function () {
+        var user, products, ownProductFileIds, orders, purchasedProductFileIds;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    user = req.user;
+                    if ((user === null || user === void 0 ? void 0 : user.role) === "admin")
+                        return [2 /*return*/, true];
+                    if (!user)
+                        return [2 /*return*/, false];
+                    return [4 /*yield*/, req.payload.find({
+                            collection: "products",
+                            depth: 0,
+                            where: {
+                                user: {
+                                    equals: user.id,
+                                },
                             },
-                        },
-                    })];
-            case 1:
-                products = (_c.sent()).docs;
-                ownProductFileIds = products.flatMap(function (prod) { return prod.product_files; });
-                return [4 /*yield*/, req.payload.find({
-                        collection: "orders",
-                        depth: 2,
-                        where: {
-                            user: {
-                                equals: user.id,
+                        })];
+                case 1:
+                    products = (_b.sent()).docs;
+                    ownProductFileIds = products.flatMap(function (prod) { return prod.product_files; });
+                    return [4 /*yield*/, req.payload.find({
+                            collection: "orders",
+                            depth: 2,
+                            where: {
+                                user: {
+                                    equals: user.id,
+                                },
                             },
-                        },
-                    })];
-            case 2:
-                orders = (_c.sent()).docs;
-                purchasedProductFileIds = orders
-                    .map(function (order) {
-                    return order.products.map(function (product) {
-                        if (typeof product === "string")
-                            return req.payload.logger.error("Search depth not sufficient to find purchased file IDs");
-                        return typeof product.product_files === "string"
-                            ? product.product_files
-                            : product.product_files.id;
-                    });
-                })
-                    .filter(Boolean)
-                    .flat();
-                return [2 /*return*/, {
-                        id: {
-                            in: __spreadArray(__spreadArray([], ownProductFileIds, true), purchasedProductFileIds, true),
-                        },
-                    }];
-        }
+                        })];
+                case 2:
+                    orders = (_b.sent()).docs;
+                    purchasedProductFileIds = orders
+                        .map(function (order) {
+                        return order.products.map(function (product) {
+                            if (typeof product === "string")
+                                return req.payload.logger.error("Search depth not sufficient to find purchased file IDs");
+                            return typeof product.product_files === "string"
+                                ? product.product_files
+                                : product.product_files.id;
+                        });
+                    })
+                        .filter(Boolean)
+                        .flat();
+                    return [2 /*return*/, {
+                            id: {
+                                in: __spreadArray(__spreadArray([], ownProductFileIds, true), purchasedProductFileIds, true),
+                            },
+                        }];
+            }
+        });
     });
-}); };
+};
 exports.ProductFiles = {
     slug: "product_files",
     admin: {

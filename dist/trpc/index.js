@@ -60,54 +60,58 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.appRouter = void 0;
 var zod_1 = require("zod");
-var query_validator_1 = require("../lib/validators/query-validator");
-var get_payload_1 = require("../server/get-payload");
 var auth_router_1 = require("./auth-router");
 var trpc_1 = require("./trpc");
+var query_validator_1 = require("../lib/validators/query-validator");
+var get_payload_1 = require("../get-payload");
+var payment_router_1 = require("./payment-router");
 exports.appRouter = (0, trpc_1.router)({
     auth: auth_router_1.authRouter,
+    payment: payment_router_1.paymentRouter,
     getInfiniteProducts: trpc_1.publicProcedure
         .input(zod_1.z.object({
         limit: zod_1.z.number().min(1).max(100),
         cursor: zod_1.z.number().nullish(),
         query: query_validator_1.QueryValidator,
     }))
-        .query(function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-        var query, cursor, sort, limit, queryOpts, payload, parsedQueryOpts, _i, _c, _d, key, value, page, _e, items, hasNextPage, nextPage;
-        var input = _b.input;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
-                case 0:
-                    query = input.query, cursor = input.cursor;
-                    sort = query.sort, limit = query.limit, queryOpts = __rest(query, ["sort", "limit"]);
-                    return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
-                case 1:
-                    payload = _f.sent();
-                    parsedQueryOpts = {};
-                    for (_i = 0, _c = Object.entries(queryOpts); _i < _c.length; _i++) {
-                        _d = _c[_i], key = _d[0], value = _d[1];
-                        parsedQueryOpts[key] = {
-                            equals: value,
-                        };
-                    }
-                    page = cursor || 1;
-                    return [4 /*yield*/, payload.find({
-                            collection: "products",
-                            where: __assign({ approvedForSale: {
-                                    equals: "approved",
-                                } }, parsedQueryOpts),
-                            sort: sort,
-                            depth: 1,
-                            limit: limit,
-                            page: page,
-                        })];
-                case 2:
-                    _e = _f.sent(), items = _e.docs, hasNextPage = _e.hasNextPage, nextPage = _e.nextPage;
-                    return [2 /*return*/, {
-                            items: items,
-                            nextPage: hasNextPage ? nextPage : null,
-                        }];
-            }
+        .query(function (_a) {
+        var input = _a.input;
+        return __awaiter(void 0, void 0, void 0, function () {
+            var query, cursor, sort, limit, queryOpts, payload, parsedQueryOpts, page, _b, items, hasNextPage, nextPage;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        query = input.query, cursor = input.cursor;
+                        sort = query.sort, limit = query.limit, queryOpts = __rest(query, ["sort", "limit"]);
+                        return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
+                    case 1:
+                        payload = _c.sent();
+                        parsedQueryOpts = {};
+                        Object.entries(queryOpts).forEach(function (_a) {
+                            var key = _a[0], value = _a[1];
+                            parsedQueryOpts[key] = {
+                                equals: value,
+                            };
+                        });
+                        page = cursor || 1;
+                        return [4 /*yield*/, payload.find({
+                                collection: 'products',
+                                where: __assign({ approvedForSale: {
+                                        equals: 'approved',
+                                    } }, parsedQueryOpts),
+                                sort: sort,
+                                depth: 1,
+                                limit: limit,
+                                page: page,
+                            })];
+                    case 2:
+                        _b = _c.sent(), items = _b.docs, hasNextPage = _b.hasNextPage, nextPage = _b.nextPage;
+                        return [2 /*return*/, {
+                                items: items,
+                                nextPage: hasNextPage ? nextPage : null,
+                            }];
+                }
+            });
         });
-    }); }),
+    }),
 });

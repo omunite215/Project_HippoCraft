@@ -37,106 +37,114 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authRouter = void 0;
+var account_credentials_validator_1 = require("../lib/validators/account-credentials-validator");
+var trpc_1 = require("./trpc");
+var get_payload_1 = require("../get-payload");
 var server_1 = require("@trpc/server");
 var zod_1 = require("zod");
-var account_credentials_validator_1 = require("../lib/validators/account-credentials-validator");
-var get_payload_1 = require("../server/get-payload");
-var trpc_1 = require("./trpc");
 exports.authRouter = (0, trpc_1.router)({
     createPayloadUser: trpc_1.publicProcedure
         .input(account_credentials_validator_1.AuthCredentialsValidator)
-        .mutation(function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-        var email, password, payload, users;
-        var input = _b.input;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    email = input.email, password = input.password;
-                    return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
-                case 1:
-                    payload = _c.sent();
-                    return [4 /*yield*/, payload.find({
-                            collection: "users",
-                            where: {
-                                email: {
-                                    equals: email,
+        .mutation(function (_a) {
+        var input = _a.input;
+        return __awaiter(void 0, void 0, void 0, function () {
+            var email, password, payload, users;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        email = input.email, password = input.password;
+                        return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()
+                            // check if user already exists
+                        ];
+                    case 1:
+                        payload = _b.sent();
+                        return [4 /*yield*/, payload.find({
+                                collection: 'users',
+                                where: {
+                                    email: {
+                                        equals: email,
+                                    },
                                 },
-                            },
-                        })];
-                case 2:
-                    users = (_c.sent()).docs;
-                    if (users.length !== 0)
-                        throw new server_1.TRPCError({ code: "CONFLICT" });
-                    return [4 /*yield*/, payload.create({
-                            collection: "users",
-                            data: {
-                                email: email,
-                                password: password,
-                                role: "user",
-                            },
-                        })];
-                case 3:
-                    _c.sent();
-                    return [2 /*return*/, { success: true, sentToEmail: email }];
-            }
+                            })];
+                    case 2:
+                        users = (_b.sent()).docs;
+                        if (users.length !== 0)
+                            throw new server_1.TRPCError({ code: 'CONFLICT' });
+                        return [4 /*yield*/, payload.create({
+                                collection: 'users',
+                                data: {
+                                    email: email,
+                                    password: password,
+                                    role: 'user',
+                                },
+                            })];
+                    case 3:
+                        _b.sent();
+                        return [2 /*return*/, { success: true, sentToEmail: email }];
+                }
+            });
         });
-    }); }),
+    }),
     verifyEmail: trpc_1.publicProcedure
         .input(zod_1.z.object({ token: zod_1.z.string() }))
-        .query(function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-        var token, payload, isVerified;
-        var input = _b.input;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    token = input.token;
-                    return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
-                case 1:
-                    payload = _c.sent();
-                    return [4 /*yield*/, payload.verifyEmail({
-                            collection: "users",
-                            token: token,
-                        })];
-                case 2:
-                    isVerified = _c.sent();
-                    if (!isVerified)
-                        throw new server_1.TRPCError({ code: "UNAUTHORIZED" });
-                    return [2 /*return*/, { success: true }];
-            }
+        .query(function (_a) {
+        var input = _a.input;
+        return __awaiter(void 0, void 0, void 0, function () {
+            var token, payload, isVerified;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        token = input.token;
+                        return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
+                    case 1:
+                        payload = _b.sent();
+                        return [4 /*yield*/, payload.verifyEmail({
+                                collection: 'users',
+                                token: token,
+                            })];
+                    case 2:
+                        isVerified = _b.sent();
+                        if (!isVerified)
+                            throw new server_1.TRPCError({ code: 'UNAUTHORIZED' });
+                        return [2 /*return*/, { success: true }];
+                }
+            });
         });
-    }); }),
+    }),
     signIn: trpc_1.publicProcedure
         .input(account_credentials_validator_1.AuthCredentialsValidator)
-        .mutation(function (_a) { return __awaiter(void 0, [_a], void 0, function (_b) {
-        var email, password, res, payload, err_1;
-        var input = _b.input, ctx = _b.ctx;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0:
-                    email = input.email, password = input.password;
-                    res = ctx.res;
-                    return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
-                case 1:
-                    payload = _c.sent();
-                    _c.label = 2;
-                case 2:
-                    _c.trys.push([2, 4, , 5]);
-                    return [4 /*yield*/, payload.login({
-                            collection: "users",
-                            data: {
-                                email: email,
-                                password: password,
-                            },
-                            res: res,
-                        })];
-                case 3:
-                    _c.sent();
-                    return [2 /*return*/, { success: true }];
-                case 4:
-                    err_1 = _c.sent();
-                    throw new server_1.TRPCError({ code: "UNAUTHORIZED" });
-                case 5: return [2 /*return*/];
-            }
+        .mutation(function (_a) {
+        var input = _a.input, ctx = _a.ctx;
+        return __awaiter(void 0, void 0, void 0, function () {
+            var email, password, res, payload, err_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        email = input.email, password = input.password;
+                        res = ctx.res;
+                        return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
+                    case 1:
+                        payload = _b.sent();
+                        _b.label = 2;
+                    case 2:
+                        _b.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, payload.login({
+                                collection: 'users',
+                                data: {
+                                    email: email,
+                                    password: password,
+                                },
+                                res: res,
+                            })];
+                    case 3:
+                        _b.sent();
+                        return [2 /*return*/, { success: true }];
+                    case 4:
+                        err_1 = _b.sent();
+                        throw new server_1.TRPCError({ code: 'UNAUTHORIZED' });
+                    case 5: return [2 /*return*/];
+                }
+            });
         });
-    }); }),
+    }),
 });
