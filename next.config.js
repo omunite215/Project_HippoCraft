@@ -9,7 +9,7 @@ const nextConfig = {
 			},
 			{
 				protocol: "https",
-				hostname: "digitalhippo-production.up.railway.app",
+				hostname: "projecthippocraft.up.railway.app/",
 			},
 		],
 	},

@@ -59,7 +59,7 @@ export function constructMetadata({
 			creator: "@omunite215",
 		},
 		icons,
-		metadataBase: new URL("https://digitalhippo.up.railway.app"),
+		metadataBase: new URL("https://projecthippocraft.up.railway.app"),
 		...(noIndex && {
 			robots: {
 				index: false,
