@@ -50,7 +50,7 @@ function constructMetadata(_a) {
             description: description,
             images: [image],
             creator: "@omunite215",
-        }, icons: icons, metadataBase: new URL("https://digitalhippo.up.railway.app") }, (noIndex && {
+        }, icons: icons, metadataBase: new URL("https://projecthippocraft.up.railway.app") }, (noIndex && {
         robots: {
             index: false,
             follow: false,
